@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="24dp">
+
+    <!-- Header: TV Caller -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="32sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Tab Navigation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#003D5B"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:id="@+id/tab_quick_dial"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="@string/tab_quick_dial"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#003D5B"
+            android:focusable="true"
+            android:clickable="true"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/tab_dial_pad"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="@string/tab_dial_pad"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#2D6D8B"
+            android:focusable="true"
+            android:clickable="true"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/tab_contacts"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="@string/tab_contacts"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#003D5B"
+            android:focusable="true"
+            android:clickable="true"/>
+    </LinearLayout>
+
+    <!-- Input Field Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#E0E0E0"
+        android:padding="2dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/number_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_weight="1"
+            android:hint="@string/enter_number"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textColorHint="#616161"
+            android:background="@android:color/transparent"
+            android:inputType="phone"
+            android:autofillHints="phone"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/btn_clear"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="@string/btn_clear"
+            android:textSize="20sp"
+            android:textColor="#616161"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:focusable="true"
+            android:clickable="true"
+            android:contentDescription="@string/btn_clear"/>
+    </LinearLayout>
+
+    <!-- Number Pad: 3x4 Grid -->
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:baselineAligned="false"
+        tools:ignore="NestedWeights">
+
+        <!-- Row 1: 1, 2, 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:layout_marginBottom="2dp">
+
+            <TextView
+                android:id="@+id/btn_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_1"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:layout_marginEnd="2dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_1"/>
+
+            <TextView
+                android:id="@+id/btn_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_2"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:layout_marginEnd="2dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_2"/>
+
+            <TextView
+                android:id="@+id/btn_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_3"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_3"/>
+        </LinearLayout>
+
+        <!-- Row 2: 4, 5, 6 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:layout_marginBottom="2dp">
+
+            <TextView
+                android:id="@+id/btn_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_4"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:layout_marginEnd="2dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_4"/>
+
+            <TextView
+                android:id="@+id/btn_5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_5"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:layout_marginEnd="2dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_5"/>
+
+            <TextView
+                android:id="@+id/btn_6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_6"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_6"/>
+        </LinearLayout>
+
+        <!-- Row 3: 7, 8, 9 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:layout_marginBottom="2dp">
+
+            <TextView
+                android:id="@+id/btn_7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_7"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:layout_marginEnd="2dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_7"/>
+
+            <TextView
+                android:id="@+id/btn_8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_8"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:layout_marginEnd="2dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_8"/>
+
+            <TextView
+                android:id="@+id/btn_9"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_9"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_9"/>
+        </LinearLayout>
+
+        <!-- Row 4: *, 0, # -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <TextView
+                android:id="@+id/btn_star"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_star"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:layout_marginEnd="2dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_star"/>
+
+            <TextView
+                android:id="@+id/btn_0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_0"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:layout_marginEnd="2dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_0"/>
+
+            <TextView
+                android:id="@+id/btn_hash"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btn_hash"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/dial_button_selector"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="@string/btn_hash"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Call Button: Large Green Circle -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:id="@+id/btn_call"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_call"
+            android:tint="#FFFFFF"
+            android:padding="16dp"
+            android:background="@drawable/green_circle_button"
+            android:focusable="true"
+            android:clickable="true"
+            android:contentDescription="@string/call_button"/>
+    </FrameLayout>
+
+</LinearLayout>

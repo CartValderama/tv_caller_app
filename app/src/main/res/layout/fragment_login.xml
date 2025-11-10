@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="48dp"
+    android:background="@color/default_background">
+
+    <TextView
+        android:id="@+id/login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_title"
+        android:textSize="36sp"
+        android:textColor="#212121"
+        android:layout_marginBottom="48dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/email_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="400dp"
+        android:maxWidth="400dp"
+        android:minEms="10"
+        android:layout_marginBottom="8dp"
+        android:autofillHints="emailAddress"
+        android:background="@drawable/input_field_background"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        android:textColor="#212121"
+        android:textColorHint="#616161"
+        android:textSize="20sp"
+        android:importantForAutofill="yes" />
+
+    <EditText
+        android:id="@+id/password_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="400dp"
+        android:maxWidth="400dp"
+        android:minEms="10"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="password"
+        android:background="@drawable/input_field_background"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:textColor="#212121"
+        android:textColorHint="#616161"
+        android:textSize="20sp"
+        android:importantForAutofill="yes" />
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minWidth="400dp"
+        android:maxWidth="400dp"
+        android:padding="0dp"
+        android:layout_margin="0dp">
+
+        <Button
+            android:id="@+id/login_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/login_button"
+            android:textSize="16sp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:padding="16dp"
+            android:background="@drawable/button_primary_background"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/register_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/register_button"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:padding="16dp"
+            android:layout_marginStart="4dp"
+            android:textColor="#212121"
+            android:background="@drawable/button_secondary_background" />
+    </LinearLayout>
+
+</LinearLayout>

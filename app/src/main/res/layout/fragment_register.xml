@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="40dp"
+    android:background="@color/default_background">
+
+    <TextView
+        android:id="@+id/register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/register_title"
+        android:textColor="#212121"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <!-- First Name and Last Name (side by side) -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:minWidth="400dp"
+        android:maxWidth="400dp">
+
+        <EditText
+            android:id="@+id/first_name_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:autofillHints="personName"
+            android:background="@drawable/input_field_background"
+            android:hint="@string/first_name_hint"
+            android:inputType="textPersonName"
+            android:padding="16dp"
+            android:textColor="#212121"
+            android:textColorHint="#616161"
+            android:textSize="16sp"
+            android:importantForAutofill="yes" />
+
+        <EditText
+            android:id="@+id/last_name_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:autofillHints="personName"
+            android:background="@drawable/input_field_background"
+            android:hint="@string/last_name_hint"
+            android:inputType="textPersonName"
+            android:padding="16dp"
+            android:textColor="#212121"
+            android:textColorHint="#616161"
+            android:textSize="16sp"
+            android:importantForAutofill="yes" />
+    </LinearLayout>
+
+    <!-- Email -->
+    <EditText
+        android:id="@+id/email_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:autofillHints="emailAddress"
+        android:background="@drawable/input_field_background"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:maxWidth="400dp"
+        android:minWidth="400dp"
+        android:padding="16dp"
+        android:textColor="#212121"
+        android:textColorHint="#616161"
+        android:textSize="16sp"
+        android:importantForAutofill="yes" />
+
+    <!-- Password and Confirm Password (side by side) -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:minWidth="400dp"
+        android:maxWidth="400dp">
+
+        <EditText
+            android:id="@+id/password_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:autofillHints="password"
+            android:background="@drawable/input_field_background"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:textColor="#212121"
+            android:textColorHint="#616161"
+            android:textSize="16sp"
+            android:importantForAutofill="yes" />
+
+        <EditText
+            android:id="@+id/confirm_password_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:autofillHints="password"
+            android:background="@drawable/input_field_background"
+            android:hint="@string/confirm_password_hint"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:textColor="#212121"
+            android:textColorHint="#616161"
+            android:textSize="16sp"
+            android:importantForAutofill="yes" />
+    </LinearLayout>
+
+    <!-- Phone Number -->
+    <EditText
+        android:id="@+id/phone_number_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="phone"
+        android:background="@drawable/input_field_background"
+        android:hint="@string/phone_number_label"
+        android:inputType="phone"
+        android:maxWidth="400dp"
+        android:minWidth="400dp"
+        android:padding="16dp"
+        android:textColor="#212121"
+        android:textColorHint="#616161"
+        android:textSize="16sp"
+        android:importantForAutofill="yes" />
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minWidth="400dp"
+        android:maxWidth="400dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/register_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/button_primary_background"
+            android:text="@string/register_button"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/back_to_login_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:text="@string/back_to_login"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textColor="#212121"
+            android:padding="16dp"
+            android:background="@drawable/button_secondary_background" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">TV Caller</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Login to TV Caller</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Create</string>
+
+    <!-- Register Screen -->
+    <string name="register_title">Create Account</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="phone_number_label">Phone Number</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="back_to_login">Return</string>
+
+    <!-- Tabs -->
+    <string name="tab_quick_dial">Quick Dial</string>
+    <string name="tab_dial_pad">Dial Pad</string>
+    <string name="tab_contacts">Contacts</string>
+
+    <!-- Dial Pad -->
+    <string name="enter_number">Enter number</string>
+    <string name="call_button">Call</string>
+    <string name="btn_clear">✕</string>
+    <string name="btn_0">0</string>
+    <string name="btn_1">1</string>
+    <string name="btn_2">2</string>
+    <string name="btn_3">3</string>
+    <string name="btn_4">4</string>
+    <string name="btn_5">5</string>
+    <string name="btn_6">6</string>
+    <string name="btn_7">7</string>
+    <string name="btn_8">8</string>
+    <string name="btn_9">9</string>
+    <string name="btn_star">*</string>
+    <string name="btn_hash">#</string>
+
+    <!-- Contact List -->
+    <string name="add_new_contact">Add New Contact</string>
+    <string name="page_indicator">Page %1$d of %2$d</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
+    <!-- Contact Detail -->
+    <string name="go_back">← Go Back</string>
+    <string name="call">Call</string>
+    <string name="remove_contact">Remove</string>
+    <string name="contact_name_placeholder">Marco</string>
+    <string name="phone_placeholder">123–456–7891</string>
+    <string name="profile_icon">👤</string>
+
+    <!-- Authentication -->
+    <string name="logout">Logout</string>
+
+    <!-- Add/Edit Contact -->
+    <string name="name_label">Name *</string>
+    <string name="name_hint">Enter contact name</string>
+    <string name="phone_label">Phone Number *</string>
+    <string name="phone_number_hint">Enter phone number</string>
+    <string name="email_label">Email (Optional)</string>
+    <string name="contact_email_hint">Enter email address</string>
+    <string name="address_label">Address (Optional)</string>
+    <string name="contact_address_hint">Enter address</string>
+    <string name="notes_label">Notes (Optional)</string>
+    <string name="contact_notes_hint">Add any notes about this contact</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit_contact">Edit Contact</string>
+</resources>

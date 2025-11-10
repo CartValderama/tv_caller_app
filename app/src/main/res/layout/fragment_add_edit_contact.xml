@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="24dp">
+
+    <!-- Add New Contact Heading -->
+    <TextView
+        android:id="@+id/form_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_contact"
+        android:textSize="32sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Name and Phone Number Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <!-- Name Field Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp">
+
+            <!-- Name Label -->
+            <TextView
+                android:id="@+id/label_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Name Input -->
+            <EditText
+                android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:autofillHints="personName"
+                android:background="#F5F5F5"
+                android:focusable="true"
+                android:hint="@string/name_hint"
+                android:importantForAutofill="yes"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="#000000"
+                android:textColorHint="#666666"
+                android:textSize="16sp"
+                tools:ignore="VisualLintTextFieldSize" />
+        </LinearLayout>
+
+        <!-- Phone Number Field Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <!-- Phone Label -->
+            <TextView
+                android:id="@+id/label_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Phone Number Input -->
+            <EditText
+                android:id="@+id/input_phone"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:autofillHints="phone"
+                android:background="#F5F5F5"
+                android:focusable="true"
+                android:hint="@string/phone_number_hint"
+                android:importantForAutofill="yes"
+                android:inputType="phone"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="#000000"
+                android:textColorHint="#666666"
+                android:textSize="16sp"
+                tools:ignore="VisualLintTextFieldSize" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Email and Address Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <!-- Email Field Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp">
+
+            <!-- Email Label -->
+            <TextView
+                android:id="@+id/label_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Email Input (Optional) -->
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:autofillHints="emailAddress"
+                android:background="#F5F5F5"
+                android:focusable="true"
+                android:hint="@string/contact_email_hint"
+                android:importantForAutofill="yes"
+                android:inputType="textEmailAddress"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="#000000"
+                android:textColorHint="#666666"
+                android:textSize="16sp"
+                tools:ignore="VisualLintTextFieldSize" />
+        </LinearLayout>
+
+        <!-- Address Field Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <!-- Address Label -->
+            <TextView
+                android:id="@+id/label_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Address Input (Optional) -->
+            <EditText
+                android:id="@+id/input_address"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:autofillHints="postalAddress"
+                android:background="#F5F5F5"
+                android:focusable="true"
+                android:hint="@string/contact_address_hint"
+                android:importantForAutofill="yes"
+                android:inputType="textPostalAddress"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="#000000"
+                android:textColorHint="#666666"
+                android:textSize="16sp"
+                tools:ignore="VisualLintTextFieldSize" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Notes Field Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Notes Label -->
+        <TextView
+            android:id="@+id/label_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notes_label"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Notes Input (Optional) - Fills Remaining Space -->
+        <EditText
+            android:id="@+id/input_notes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/contact_notes_hint"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="8dp"
+            android:background="#F5F5F5"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:focusable="true"
+            android:importantForAutofill="no"
+            tools:ignore="VisualLintTextFieldSize" />
+    </LinearLayout>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <!-- Save Button -->
+        <TextView
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/save"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#1976D2"
+            android:layout_marginEnd="4dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:contentDescription="@string/save" />
+
+        <!-- Cancel Button -->
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/button_secondary_background"
+            android:layout_marginStart="4dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:contentDescription="@string/cancel" />
+    </LinearLayout>
+
+</LinearLayout>
