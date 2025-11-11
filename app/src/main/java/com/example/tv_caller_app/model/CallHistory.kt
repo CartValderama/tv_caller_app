@@ -25,7 +25,7 @@ data class CallHistory(
     val contactName: String? = null,
 
     @SerialName("call_type")
-    val callType: String, // Store as string from database
+    val callType: String, // incoming, outgoing, missed
 
     @SerialName("call_duration")
     val callDuration: Int = 0,
@@ -35,6 +35,22 @@ data class CallHistory(
 
     @SerialName("notes")
     val notes: String? = null,
+
+    // WebRTC fields for calling feature
+    @SerialName("call_method")
+    val callMethod: String = "webrtc",  // webrtc, pstn
+
+    @SerialName("media_type")
+    val mediaType: String = "audio",  // audio, video
+
+    @SerialName("connection_quality")
+    val connectionQuality: String? = null,  // excellent, good, fair, poor
+
+    @SerialName("ice_connection_state")
+    val iceConnectionState: String? = null,
+
+    @SerialName("end_reason")
+    val endReason: String? = null,
 
     @SerialName("created_at")
     val createdAt: String? = null

@@ -71,8 +71,10 @@ dependencies {
     // Supabase
     implementation(libs.supabase.postgrest.kt)
     implementation(libs.supabase.gotrue.kt)
+    implementation(libs.supabase.realtime.kt)
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)  // WebSocket support for Realtime
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
 

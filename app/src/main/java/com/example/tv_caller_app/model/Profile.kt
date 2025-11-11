@@ -15,8 +15,23 @@ data class Profile(
     val email: String? = null,
     @SerialName("phone_number")
     val phoneNumber: String? = null,
+
+    // WebRTC fields for calling feature
+    @SerialName("is_online")
+    val isOnline: Boolean = false,
+
+    @SerialName("last_seen")
+    val lastSeen: String? = null,
+
+    @SerialName("device_type")
+    val deviceType: String? = "unknown",  // phone, tablet, tv, web, unknown
+
+    @SerialName("webrtc_status")
+    val webrtcStatus: String = "offline",  // available, in_call, busy, offline
+
     @SerialName("created_at")
     val createdAt: String? = null,
+
     @SerialName("updated_at")
     val updatedAt: String? = null
 )
@@ -32,4 +47,23 @@ data class ProfileInsert(
     val email: String? = null,
     @SerialName("phone_number")
     val phoneNumber: String? = null
+)
+
+/**
+ * Data class for updating profile presence.
+ * Used by PresenceRepository to update online status and WebRTC availability.
+ */
+@Serializable
+data class ProfilePresenceUpdate(
+    @SerialName("is_online")
+    val isOnline: Boolean,
+
+    @SerialName("last_seen")
+    val lastSeen: String,
+
+    @SerialName("webrtc_status")
+    val webrtcStatus: String,
+
+    @SerialName("device_type")
+    val deviceType: String? = null
 )
