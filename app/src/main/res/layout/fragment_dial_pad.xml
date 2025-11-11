@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    android:padding="24dp">
-
-    <!-- Header: TV Caller -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="32sp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="24dp"/>
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="12dp">
 
     <!-- Tab Navigation -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#003D5B"
-        android:layout_marginBottom="24dp">
+        android:background="@drawable/tab_container_background"
+        android:layout_marginBottom="12dp">
 
         <TextView
             android:id="@+id/tab_quick_dial"
@@ -35,7 +26,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:gravity="center"
-            android:background="#003D5B"
+            android:background="@drawable/tab_button_first_inactive"
             android:focusable="true"
             android:clickable="true"/>
 
@@ -54,7 +45,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:gravity="center"
-            android:background="#2D6D8B"
+            android:background="@drawable/tab_button_middle_active"
             android:focusable="true"
             android:clickable="true"/>
 
@@ -73,7 +64,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:gravity="center"
-            android:background="#003D5B"
+            android:background="@drawable/tab_button_last_inactive"
             android:focusable="true"
             android:clickable="true"/>
     </LinearLayout>
@@ -83,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#E0E0E0"
+        android:background="@drawable/input_container_background"
         android:padding="2dp"
         android:layout_marginBottom="4dp"
         android:gravity="center_vertical">
@@ -102,7 +93,8 @@
             android:inputType="phone"
             android:autofillHints="phone"
             android:paddingStart="8dp"
-            android:paddingEnd="8dp"/>
+            android:paddingEnd="8dp"
+            tools:ignore="VisualLintTextFieldSize" />
 
         <TextView
             android:id="@+id/btn_clear"
@@ -120,7 +112,6 @@
 
     <!-- Number Pad: 3x4 Grid -->
     <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -360,8 +351,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginTop="16dp">
 
         <ImageView
             android:id="@+id/btn_call"

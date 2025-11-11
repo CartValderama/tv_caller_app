@@ -11,131 +11,209 @@
         android:id="@+id/register_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/register_title"
         android:textColor="#212121"
         android:textSize="28sp"
         android:textStyle="bold" />
 
-    <!-- First Name and Last Name (side by side) -->
+    <!-- Username and Phone Number Row -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal"
-        android:layout_marginBottom="8dp"
-        android:minWidth="400dp"
-        android:maxWidth="400dp">
-
-        <EditText
-            android:id="@+id/first_name_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:autofillHints="personName"
-            android:background="@drawable/input_field_background"
-            android:hint="@string/first_name_hint"
-            android:inputType="textPersonName"
-            android:padding="16dp"
-            android:textColor="#212121"
-            android:textColorHint="#616161"
-            android:textSize="16sp"
-            android:importantForAutofill="yes" />
-
-        <EditText
-            android:id="@+id/last_name_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:autofillHints="personName"
-            android:background="@drawable/input_field_background"
-            android:hint="@string/last_name_hint"
-            android:inputType="textPersonName"
-            android:padding="16dp"
-            android:textColor="#212121"
-            android:textColorHint="#616161"
-            android:textSize="16sp"
-            android:importantForAutofill="yes" />
-    </LinearLayout>
-
-    <!-- Email -->
-    <EditText
-        android:id="@+id/email_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:autofillHints="emailAddress"
-        android:background="@drawable/input_field_background"
-        android:hint="@string/email_hint"
-        android:inputType="textEmailAddress"
-        android:maxWidth="400dp"
-        android:minWidth="400dp"
-        android:padding="16dp"
-        android:textColor="#212121"
-        android:textColorHint="#616161"
-        android:textSize="16sp"
-        android:importantForAutofill="yes" />
-
-    <!-- Password and Confirm Password (side by side) -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp"
-        android:minWidth="400dp"
-        android:maxWidth="400dp">
-
-        <EditText
-            android:id="@+id/password_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:autofillHints="password"
-            android:background="@drawable/input_field_background"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:padding="16dp"
-            android:textColor="#212121"
-            android:textColorHint="#616161"
-            android:textSize="16sp"
-            android:importantForAutofill="yes" />
-
-        <EditText
-            android:id="@+id/confirm_password_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:autofillHints="password"
-            android:background="@drawable/input_field_background"
-            android:hint="@string/confirm_password_hint"
-            android:inputType="textPassword"
-            android:padding="16dp"
-            android:textColor="#212121"
-            android:textColorHint="#616161"
-            android:textSize="16sp"
-            android:importantForAutofill="yes" />
-    </LinearLayout>
-
-    <!-- Phone Number -->
-    <EditText
-        android:id="@+id/phone_number_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:autofillHints="phone"
-        android:background="@drawable/input_field_background"
-        android:hint="@string/phone_number_label"
-        android:inputType="phone"
-        android:maxWidth="400dp"
         android:minWidth="400dp"
-        android:padding="16dp"
-        android:textColor="#212121"
-        android:textColorHint="#616161"
-        android:textSize="16sp"
-        android:importantForAutofill="yes" />
+        android:maxWidth="400dp">
+
+        <!-- Username Field Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="4dp">
+
+            <!-- Username Label -->
+            <TextView
+                android:id="@+id/label_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Username Input -->
+            <EditText
+                android:id="@+id/username_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="username"
+                android:background="@drawable/input_field_background"
+                android:hint="@string/username_hint"
+                android:inputType="textPersonName"
+                android:padding="16dp"
+                android:textColor="#212121"
+                android:textColorHint="#616161"
+                android:textSize="16sp"
+                android:importantForAutofill="yes" />
+        </LinearLayout>
+
+        <!-- Phone Number Field Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="4dp">
+
+            <!-- Phone Number Label -->
+            <TextView
+                android:id="@+id/label_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Phone Number Input -->
+            <EditText
+                android:id="@+id/phone_number_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="phone"
+                android:background="@drawable/input_field_background"
+                android:hint="@string/phone_number_label"
+                android:inputType="phone"
+                android:padding="16dp"
+                android:textColor="#212121"
+                android:textColorHint="#616161"
+                android:textSize="16sp"
+                android:importantForAutofill="yes" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Email Field Container -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:minWidth="400dp"
+        android:maxWidth="400dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Email Label -->
+        <TextView
+            android:id="@+id/label_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_label"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/input_field_background"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:textColor="#212121"
+            android:textColorHint="#616161"
+            android:textSize="16sp"
+            android:importantForAutofill="yes" />
+    </LinearLayout>
+
+    <!-- Password and Confirm Password Row -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp"
+        android:minWidth="400dp"
+        android:maxWidth="400dp">
+
+        <!-- Password Field Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="4dp">
+
+            <!-- Password Label -->
+            <TextView
+                android:id="@+id/label_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Password Input -->
+            <EditText
+                android:id="@+id/password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:background="@drawable/input_field_background"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textColor="#212121"
+                android:textColorHint="#616161"
+                android:textSize="16sp"
+                android:importantForAutofill="yes" />
+        </LinearLayout>
+
+        <!-- Confirm Password Field Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="4dp">
+
+            <!-- Confirm Password Label -->
+            <TextView
+                android:id="@+id/label_confirm_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_password_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Confirm Password Input -->
+            <EditText
+                android:id="@+id/confirm_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:background="@drawable/input_field_background"
+                android:hint="@string/confirm_password_hint"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textColor="#212121"
+                android:textColorHint="#616161"
+                android:textSize="16sp"
+                android:importantForAutofill="yes" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

@@ -12,8 +12,7 @@ import kotlinx.serialization.Serializable
 data class Profile(
     val id: String,
     val username: String? = null,
-    @SerialName("full_name")
-    val fullName: String? = null,
+    val email: String? = null,
     @SerialName("phone_number")
     val phoneNumber: String? = null,
     @SerialName("created_at")
@@ -30,8 +29,7 @@ data class Profile(
 data class ProfileInsert(
     val id: String,
     val username: String? = null,
-    @SerialName("full_name")
-    val fullName: String? = null,
+    val email: String? = null,
     @SerialName("phone_number")
     val phoneNumber: String? = null
 )

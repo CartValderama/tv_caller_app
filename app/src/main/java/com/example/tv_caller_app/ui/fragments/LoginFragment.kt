@@ -149,7 +149,7 @@ class LoginFragment : Fragment() {
             // Login button respects both loading state AND form validation
             if (isLoading) {
                 loginButton.isEnabled = false
-                loginButton.text = "Logging in..."
+                loginButton.text = "Login"
             } else {
                 validateForm() // Re-validate form when loading completes
                 loginButton.text = "Login"

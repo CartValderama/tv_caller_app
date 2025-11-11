@@ -33,8 +33,7 @@ class RegisterFragment : Fragment() {
     }
     private val TAG = "RegisterFragment"
 
-    private lateinit var firstNameInput: EditText
-    private lateinit var lastNameInput: EditText
+    private lateinit var usernameInput: EditText
     private lateinit var emailInput: EditText
     private lateinit var phoneNumberInput: EditText
     private lateinit var passwordInput: EditText
@@ -49,8 +48,7 @@ class RegisterFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_register, container, false)
 
-        firstNameInput = view.findViewById(R.id.first_name_input)
-        lastNameInput = view.findViewById(R.id.last_name_input)
+        usernameInput = view.findViewById(R.id.username_input)
         emailInput = view.findViewById(R.id.email_input)
         phoneNumberInput = view.findViewById(R.id.phone_number_input)
         passwordInput = view.findViewById(R.id.password_input)
@@ -80,8 +78,7 @@ class RegisterFragment : Fragment() {
             }
         }
 
-        firstNameInput.addTextChangedListener(textWatcher)
-        lastNameInput.addTextChangedListener(textWatcher)
+        usernameInput.addTextChangedListener(textWatcher)
         emailInput.addTextChangedListener(textWatcher)
         phoneNumberInput.addTextChangedListener(textWatcher)
         passwordInput.addTextChangedListener(textWatcher)
@@ -93,15 +90,13 @@ class RegisterFragment : Fragment() {
      * Shows real-time error feedback for invalid inputs.
      */
     private fun validateForm() {
-        val firstName = firstNameInput.text.toString()
-        val lastName = lastNameInput.text.toString()
+        val username = usernameInput.text.toString()
         val email = emailInput.text.toString()
         val phoneNumber = phoneNumberInput.text.toString()
         val password = passwordInput.text.toString()
         val confirmPassword = confirmPasswordInput.text.toString()
 
-        val isFirstNameValid = firstName.isNotBlank()
-        val isLastNameValid = lastName.isNotBlank()
+        val isUsernameValid = username.isNotBlank()
         val isEmailValid = email.isNotBlank() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
         val isPhoneValid = phoneNumber.isNotBlank() && phoneNumber.length >= 10
         val isPasswordValid = validatePassword(password)
@@ -128,7 +123,7 @@ class RegisterFragment : Fragment() {
             passwordInput.error = null
         }
 
-        registerButton.isEnabled = isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid && isPasswordValid && doPasswordsMatch
+        registerButton.isEnabled = isUsernameValid && isEmailValid && isPhoneValid && isPasswordValid && doPasswordsMatch
     }
 
     /**
@@ -151,17 +146,15 @@ class RegisterFragment : Fragment() {
      */
     private fun setupClickListeners() {
         registerButton.setOnClickListener {
-            val firstName = firstNameInput.text.toString()
-            val lastName = lastNameInput.text.toString()
-            val fullName = "$firstName $lastName".trim()
+            val username = usernameInput.text.toString()
             val email = emailInput.text.toString()
             val phoneNumber = phoneNumberInput.text.toString()
             val password = passwordInput.text.toString()
             val confirmPassword = confirmPasswordInput.text.toString()
 
-            // Trigger registration via ViewModel with fullName and phoneNumber
+            // Trigger registration via ViewModel with username and phoneNumber
             // Validation is already done by real-time form validation
-            viewModel.register(email, password, confirmPassword, fullName, phoneNumber)
+            viewModel.register(email, password, confirmPassword, username, phoneNumber)
         }
 
         backToLoginButton.setOnClickListener {
@@ -203,8 +196,7 @@ class RegisterFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             // Disable all interactive elements during loading
             backToLoginButton.isEnabled = !isLoading
-            firstNameInput.isEnabled = !isLoading
-            lastNameInput.isEnabled = !isLoading
+            usernameInput.isEnabled = !isLoading
             emailInput.isEnabled = !isLoading
             phoneNumberInput.isEnabled = !isLoading
             passwordInput.isEnabled = !isLoading

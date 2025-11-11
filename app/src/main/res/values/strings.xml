@@ -3,18 +3,24 @@
 
     <!-- Login Screen -->
     <string name="login_title">Login to TV Caller</string>
-    <string name="email_hint">Email</string>
-    <string name="password_hint">Password</string>
+    <string name="email_hint">Enter your email address</string>
+    <string name="password_hint">Enter password</string>
+    <string name="password_label">Password</string>
     <string name="login_button">Login</string>
     <string name="register_button">Create</string>
 
     <!-- Register Screen -->
     <string name="register_title">Create Account</string>
+    <string name="username_hint">Choose a username</string>
+    <string name="username_label">Username</string>
     <string name="first_name_hint">First Name</string>
+    <string name="first_name_label">First Name</string>
     <string name="last_name_hint">Last Name</string>
+    <string name="last_name_label">Last Name</string>
     <string name="full_name_hint">Full Name</string>
-    <string name="phone_number_label">Phone Number</string>
-    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="phone_number_label">Enter phone number </string>
+    <string name="confirm_password_hint">Repeat password</string>
+    <string name="confirm_password_label">Confirm Password</string>
     <string name="back_to_login">Return</string>
 
     <!-- Tabs -->
@@ -42,7 +48,7 @@
     <!-- Contact List -->
     <string name="add_new_contact">Add New Contact</string>
     <string name="page_indicator">Page %1$d of %2$d</string>
-    <string name="previous">Previous</string>
+    <string name="previous">Prev</string>
     <string name="next">Next</string>
 
     <!-- Contact Detail -->
@@ -57,11 +63,12 @@
     <string name="logout">Logout</string>
 
     <!-- Add/Edit Contact -->
-    <string name="name_label">Name *</string>
+    <string name="name_label">Name</string>
     <string name="name_hint">Enter contact name</string>
-    <string name="phone_label">Phone Number *</string>
+    <string name="phone_label">Phone Number</string>
     <string name="phone_number_hint">Enter phone number</string>
-    <string name="email_label">Email (Optional)</string>
+    <string name="email_label">Email</string>
+    <string name="contact_email_label">Email (Optional)</string>
     <string name="contact_email_hint">Enter email address</string>
     <string name="address_label">Address (Optional)</string>
     <string name="contact_address_hint">Enter address</string>

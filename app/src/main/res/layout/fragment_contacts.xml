@@ -5,19 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    android:padding="24dp">
-
-    <!-- Title -->
-    <TextView
-        android:id="@+id/title_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="32sp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="24dp" />
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="12dp">
 
     <!-- Tab Navigation -->
     <LinearLayout
@@ -25,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#003D5B"
-        android:layout_marginBottom="24dp">
+        android:background="@drawable/tab_container_background"
+        android:layout_marginBottom="12dp">
 
         <TextView
             android:id="@+id/tab_quick_dial"
@@ -38,7 +27,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:gravity="center"
-            android:background="#003D5B"
+            android:background="@drawable/tab_button_first_inactive"
             android:focusable="true"
             android:clickable="true" />
 
@@ -57,7 +46,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:gravity="center"
-            android:background="#003D5B"
+            android:background="@drawable/tab_button_middle_inactive"
             android:focusable="true"
             android:clickable="true" />
 
@@ -76,7 +65,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:gravity="center"
-            android:background="#2D6D8B"
+            android:background="@drawable/tab_button_last_active"
             android:focusable="true"
             android:clickable="true" />
     </LinearLayout>
@@ -93,7 +82,7 @@
         android:gravity="center_vertical"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        android:background="#1976D2"
+        android:background="@drawable/button_add_contact_background"
         android:layout_marginBottom="2dp"
         android:focusable="true"
         android:clickable="true" />
@@ -118,15 +107,14 @@
             android:id="@+id/btn_prev_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
             android:text="@string/previous"
             android:textSize="16sp"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:gravity="center"
-            android:background="#1976D2"
-            android:padding="16dp"
+            android:background="@drawable/button_primary_background"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="24dp"
             android:layout_marginEnd="16dp"
             android:focusable="true"
             android:clickable="true"
@@ -146,15 +134,14 @@
             android:id="@+id/btn_next_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
             android:text="@string/next"
             android:textSize="16sp"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:gravity="center"
-            android:background="#1976D2"
-            android:padding="16dp"
+            android:background="@drawable/button_primary_background"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="24dp"
             android:focusable="true"
             android:clickable="true"
             android:contentDescription="@string/next" />

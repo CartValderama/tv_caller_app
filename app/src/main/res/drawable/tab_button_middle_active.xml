@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Focused state -->
+    <!-- Focused state - lighter with white border -->
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="#2196F3"/>
-            <corners android:radius="4dp" />
-            <stroke android:width="3dp" android:color="#FFFFFF"/>
+            <solid android:color="#4A90B5" />
+            <stroke android:width="2dp" android:color="#FFFFFF" />
         </shape>
     </item>
 
-    <!-- Pressed state -->
+    <!-- Pressed state - darker -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#1565C0"/>
-            <corners android:radius="4dp" />
+            <solid android:color="#1E5266" />
         </shape>
     </item>
 
-    <!-- Default state -->
+    <!-- Default active state -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#1976D2"/>
-            <corners android:radius="4dp" />
+            <solid android:color="#2D6D8B" />
         </shape>
     </item>
 </selector>

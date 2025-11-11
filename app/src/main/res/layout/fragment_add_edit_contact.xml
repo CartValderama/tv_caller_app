@@ -17,7 +17,7 @@
         android:textColor="#000000"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="24dp"/>
 
     <!-- Name and Phone Number Row -->
     <LinearLayout
@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="horizontal"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp">
 
         <!-- Name Field Container -->
@@ -125,7 +126,7 @@
                 android:id="@+id/label_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/email_label"
+                android:text="@string/contact_email_label"
                 android:textSize="16sp"
                 android:textColor="#000000"
                 android:textStyle="bold"
@@ -195,7 +196,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="24dp">
 
         <!-- Notes Label -->
         <TextView

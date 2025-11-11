@@ -45,29 +45,29 @@ class AuthRepository private constructor(
      *
      * @param email User's email address
      * @param password User's password
-     * @param fullName User's full name (stored for later profile creation)
+     * @param username User's username (stored for later profile creation)
      * @param phoneNumber User's phone number (stored for later profile creation)
      * @return Result with success message on success, Exception on failure
      */
     suspend fun signUp(
         email: String,
         password: String,
-        fullName: String? = null,
+        username: String? = null,
         phoneNumber: String? = null
     ): Result<String> {
         return retryOnNetworkError {
             try {
-                Log.d(TAG, "Attempting sign up for email: $email, fullName: $fullName, phoneNumber: $phoneNumber")
+                Log.d(TAG, "Attempting sign up for email: $email, username: $username, phoneNumber: $phoneNumber")
 
-                // Sign up user with Supabase Auth and store fullName and phoneNumber in user metadata
+                // Sign up user with Supabase Auth and store username and phoneNumber in user metadata
                 val authResponse = supabase.auth.signUpWith(Email) {
                     this.email = email
                     this.password = password
 
-                    // Store fullName and phoneNumber in user metadata so we can retrieve it on first login
-                    if (fullName != null || phoneNumber != null) {
+                    // Store username and phoneNumber in user metadata so we can retrieve it on first login
+                    if (username != null || phoneNumber != null) {
                         data = buildJsonObject {
-                            if (fullName != null) put("full_name", fullName)
+                            if (username != null) put("username", username)
                             if (phoneNumber != null) put("phone_number", phoneNumber)
                         }
                     }
@@ -75,7 +75,7 @@ class AuthRepository private constructor(
 
                 val userId = authResponse?.id
                 if (userId != null) {
-                    Log.d(TAG, "User created with ID: $userId, full_name stored in metadata")
+                    Log.d(TAG, "User created with ID: $userId, username stored in metadata")
                     // Note: Profile will be created on first login after email verification
                 }
 
@@ -94,29 +94,29 @@ class AuthRepository private constructor(
      *
      * @param userId User's unique ID from Supabase Auth
      * @param email User's email address
-     * @param fullName User's full name (optional, defaults to username from email)
+     * @param username User's username (optional, defaults to username from email)
      * @param phoneNumber User's phone number (optional)
      */
     private suspend fun createProfile(
         userId: String,
         email: String,
-        fullName: String? = null,
+        username: String? = null,
         phoneNumber: String? = null
     ) {
         try {
-            // Extract username from email (part before @)
-            val username = email.substringBefore("@")
+            // Use provided username or extract from email (part before @)
+            val finalUsername = username ?: email.substringBefore("@")
 
             val profileInsert = ProfileInsert(
                 id = userId,
-                username = username,
-                fullName = fullName,
+                username = finalUsername,
+                email = email,
                 phoneNumber = phoneNumber
             )
 
             supabase.from("profiles").insert(profileInsert)
 
-            Log.d(TAG, "Profile created successfully for user: $userId (fullName: $fullName, phoneNumber: $phoneNumber)")
+            Log.d(TAG, "Profile created successfully for user: $userId (username: $finalUsername, email: $email, phoneNumber: $phoneNumber)")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to create profile: ${e.message}", e)
             throw e
@@ -191,7 +191,7 @@ class AuthRepository private constructor(
     /**
      * Ensure profile exists for user, create if it doesn't.
      * Called on first login after email verification.
-     * Retrieves fullName and phoneNumber from user metadata if available.
+     * Retrieves username and phoneNumber from user metadata if available.
      *
      * @param userId User's unique ID
      * @param email User's email address
@@ -211,18 +211,18 @@ class AuthRepository private constructor(
                 // Profile doesn't exist, create it
                 Log.d(TAG, "Profile not found for user $userId, creating...")
 
-                // Get fullName and phoneNumber from user metadata (stored during registration)
+                // Get username and phoneNumber from user metadata (stored during registration)
                 val user = supabase.auth.currentUserOrNull()
 
                 // Debug: Log all metadata
                 Log.d(TAG, "User metadata: ${user?.userMetadata}")
                 Log.d(TAG, "Raw metadata keys: ${user?.userMetadata?.keys}")
 
-                // Extract fullName from JsonElement properly
-                val fullName = try {
-                    user?.userMetadata?.get("full_name")?.jsonPrimitive?.contentOrNull
+                // Extract username from JsonElement properly
+                val username = try {
+                    user?.userMetadata?.get("username")?.jsonPrimitive?.contentOrNull
                 } catch (e: Exception) {
-                    Log.w(TAG, "Error extracting full_name from metadata: ${e.message}")
+                    Log.w(TAG, "Error extracting username from metadata: ${e.message}")
                     null
                 }
 
@@ -234,14 +234,14 @@ class AuthRepository private constructor(
                     null
                 }
 
-                Log.d(TAG, "Retrieved fullName from metadata: '$fullName'")
+                Log.d(TAG, "Retrieved username from metadata: '$username'")
                 Log.d(TAG, "Retrieved phoneNumber from metadata: '$phoneNumber'")
 
-                if (fullName == null) {
-                    Log.w(TAG, "fullName is null! Using username from email as fallback")
+                if (username == null) {
+                    Log.w(TAG, "username is null! Using username from email as fallback")
                 }
 
-                createProfile(userId, email, fullName, phoneNumber)
+                createProfile(userId, email, username, phoneNumber)
             } else {
                 Log.d(TAG, "Profile already exists for user $userId")
             }

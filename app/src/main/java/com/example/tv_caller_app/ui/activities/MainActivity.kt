@@ -3,6 +3,7 @@ package com.example.tv_caller_app.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
@@ -28,14 +29,16 @@ class MainActivity : FragmentActivity() {
 
     private val TAG = "MainActivity"
     private lateinit var btnLogout: TextView
+    private lateinit var txtTitle: TextView
     private lateinit var authViewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize logout button
+        // Initialize views
         btnLogout = findViewById(R.id.btn_logout)
+        txtTitle = findViewById(R.id.txt_title)
 
         // Initialize AuthViewModel
         val sessionManager = SessionManager.getInstance(this)
@@ -152,5 +155,23 @@ class MainActivity : FragmentActivity() {
                 }
             }
         }
+    }
+
+    /**
+     * Show the title and logout button.
+     * Called when navigating to main fragments.
+     */
+    fun showHeader() {
+        txtTitle.visibility = View.VISIBLE
+        btnLogout.visibility = View.VISIBLE
+    }
+
+    /**
+     * Hide the title and logout button.
+     * Called when navigating to detail/edit screens.
+     */
+    fun hideHeader() {
+        txtTitle.visibility = View.GONE
+        btnLogout.visibility = View.GONE
     }
 }

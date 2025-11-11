@@ -91,10 +91,10 @@ class AuthViewModel(
     /**
      * Attempt to register a new account.
      * Uses Supabase authentication with email verification.
-     * Creates user profile with provided full name and phone number.
+     * Creates user profile with provided username and phone number.
      */
-    fun register(email: String, password: String, confirmPassword: String, fullName: String? = null, phoneNumber: String? = null) {
-        Log.d(TAG, "register() called with email: $email, fullName: $fullName, phoneNumber: $phoneNumber")
+    fun register(email: String, password: String, confirmPassword: String, username: String? = null, phoneNumber: String? = null) {
+        Log.d(TAG, "register() called with email: $email, username: $username, phoneNumber: $phoneNumber")
 
         // Clear previous errors
         _emailError.value = null
@@ -122,7 +122,7 @@ class AuthViewModel(
 
         viewModelScope.launch {
             try {
-                val result = authRepository.signUp(email, password, fullName, phoneNumber)
+                val result = authRepository.signUp(email, password, username, phoneNumber)
 
                 if (result.isSuccess) {
                     Log.d(TAG, "Registration successful - verification email sent")

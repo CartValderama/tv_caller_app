@@ -18,41 +18,79 @@
         android:layout_marginBottom="48dp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/email_input"
+    <!-- Email Field Container -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:minWidth="400dp"
         android:maxWidth="400dp"
-        android:minEms="10"
-        android:layout_marginBottom="8dp"
-        android:autofillHints="emailAddress"
-        android:background="@drawable/input_field_background"
-        android:hint="@string/email_hint"
-        android:inputType="textEmailAddress"
-        android:padding="16dp"
-        android:textColor="#212121"
-        android:textColorHint="#616161"
-        android:textSize="20sp"
-        android:importantForAutofill="yes" />
+        android:layout_marginBottom="16dp">
 
-    <EditText
-        android:id="@+id/password_input"
+        <!-- Email Label -->
+        <TextView
+            android:id="@+id/label_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_label"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minEms="10"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/input_field_background"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:textColor="#212121"
+            android:textColorHint="#616161"
+            android:textSize="16sp"
+            android:importantForAutofill="yes" />
+    </LinearLayout>
+
+    <!-- Password Field Container -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:minWidth="400dp"
         android:maxWidth="400dp"
-        android:minEms="10"
-        android:layout_marginBottom="16dp"
-        android:autofillHints="password"
-        android:background="@drawable/input_field_background"
-        android:hint="@string/password_hint"
-        android:inputType="textPassword"
-        android:padding="16dp"
-        android:textColor="#212121"
-        android:textColorHint="#616161"
-        android:textSize="20sp"
-        android:importantForAutofill="yes" />
+        android:layout_marginBottom="24dp">
+
+        <!-- Password Label -->
+        <TextView
+            android:id="@+id/label_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password_label"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Password Input -->
+        <EditText
+            android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minEms="10"
+            android:autofillHints="password"
+            android:background="@drawable/input_field_background"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:textColor="#212121"
+            android:textColorHint="#616161"
+            android:textSize="16sp"
+            android:importantForAutofill="yes" />
+    </LinearLayout>
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

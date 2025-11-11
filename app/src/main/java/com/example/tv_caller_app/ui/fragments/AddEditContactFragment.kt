@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.tv_caller_app.R
 import com.example.tv_caller_app.auth.SessionManager
+import com.example.tv_caller_app.ui.activities.MainActivity
 import com.example.tv_caller_app.viewmodel.AddEditContactViewModel
 
 /**
@@ -95,6 +96,9 @@ class AddEditContactFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated called")
+
+        // Hide header (title and logout button)
+        (activity as? MainActivity)?.hideHeader()
 
         // Initialize views
         formTitle = view.findViewById(R.id.form_title)
@@ -187,6 +191,8 @@ class AddEditContactFragment : Fragment() {
         // Cancel button
         btnCancel.setOnClickListener {
             Log.d(TAG, "Cancel button clicked")
+            // Show header when going back
+            (activity as? MainActivity)?.showHeader()
             // Navigate back to contacts list
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_browse_fragment, AllContactsFragment())
@@ -248,6 +254,9 @@ class AddEditContactFragment : Fragment() {
                 ).show()
 
                 viewModel.resetSavedState()
+
+                // Show header when going back
+                (activity as? MainActivity)?.showHeader()
 
                 // Navigate back to contacts list
                 requireActivity().supportFragmentManager.beginTransaction()
