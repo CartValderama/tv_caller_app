@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a1a1a"
+    android:padding="48dp"
+    tools:context=".ui.activities.OutgoingCallActivity">
+
+    <!-- Contact Information Section -->
+    <LinearLayout
+        android:id="@+id/contact_info_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Contact Avatar (Placeholder) -->
+        <ImageView
+            android:id="@+id/img_contact_avatar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/avatar_placeholder"
+            android:contentDescription="Contact Avatar"
+            android:scaleType="centerCrop" />
+
+        <!-- Calling Label -->
+        <TextView
+            android:id="@+id/txt_calling_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Calling..."
+            android:textColor="#ffffff"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <!-- Contact Name -->
+        <TextView
+            android:id="@+id/txt_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Contact Name"
+            android:textColor="#ffffff"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <!-- Contact Phone Number (optional) -->
+        <TextView
+            android:id="@+id/txt_contact_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#cccccc"
+            android:textSize="28sp"
+            android:visibility="gone" />
+
+        <!-- Call Status Message -->
+        <TextView
+            android:id="@+id/txt_call_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Ringing..."
+            android:textColor="#cccccc"
+            android:textSize="28sp" />
+    </LinearLayout>
+
+    <!-- Hang Up Button -->
+    <LinearLayout
+        android:id="@+id/call_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Cancel/Hang Up Button -->
+        <Button
+            android:id="@+id/btn_hang_up"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:background="#e74c3c"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="Cancel"
+            android:textColor="#ffffff"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Connection Progress Indicator -->
+    <ProgressBar
+        android:id="@+id/progress_connecting"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/contact_info_section"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:indeterminateTint="#3498db"
+        android:visibility="visible" />
+
+</RelativeLayout>

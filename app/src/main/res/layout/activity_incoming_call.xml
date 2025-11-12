@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a1a1a"
+    android:padding="48dp"
+    tools:context=".ui.activities.IncomingCallActivity">
+
+    <!-- Caller Information Section -->
+    <LinearLayout
+        android:id="@+id/caller_info_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Caller Avatar (Placeholder) -->
+        <ImageView
+            android:id="@+id/img_caller_avatar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/avatar_placeholder"
+            android:contentDescription="Caller Avatar"
+            android:scaleType="centerCrop" />
+
+        <!-- Incoming Call Label -->
+        <TextView
+            android:id="@+id/txt_incoming_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Incoming Call"
+            android:textColor="#ffffff"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <!-- Caller Name -->
+        <TextView
+            android:id="@+id/txt_caller_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Unknown Caller"
+            android:textColor="#ffffff"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <!-- Caller Phone Number (optional) -->
+        <TextView
+            android:id="@+id/txt_caller_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#cccccc"
+            android:textSize="28sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Call Action Buttons -->
+    <LinearLayout
+        android:id="@+id/call_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Reject Button -->
+        <Button
+            android:id="@+id/btn_reject_call"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="32dp"
+            android:background="#e74c3c"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusRight="@id/btn_answer_call"
+            android:text="Reject"
+            android:textColor="#ffffff"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <!-- Answer Button -->
+        <Button
+            android:id="@+id/btn_answer_call"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:background="#27ae60"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusLeft="@id/btn_reject_call"
+            android:text="Answer"
+            android:textColor="#ffffff"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Call Status Message (for debugging) -->
+    <TextView
+        android:id="@+id/txt_call_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Ringing..."
+        android:textColor="#cccccc"
+        android:textSize="24sp"
+        android:visibility="visible" />
+
+</RelativeLayout>

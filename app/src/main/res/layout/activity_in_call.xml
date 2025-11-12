@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a1a1a"
+    android:padding="48dp"
+    tools:context=".ui.activities.InCallActivity">
+
+    <!-- Contact Information Section -->
+    <LinearLayout
+        android:id="@+id/contact_info_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Contact Avatar (Placeholder) -->
+        <ImageView
+            android:id="@+id/img_contact_avatar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/avatar_placeholder"
+            android:contentDescription="Contact Avatar"
+            android:scaleType="centerCrop" />
+
+        <!-- Contact Name -->
+        <TextView
+            android:id="@+id/txt_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Contact Name"
+            android:textColor="#ffffff"
+            android:textSize="42sp"
+            android:textStyle="bold" />
+
+        <!-- Call Status -->
+        <TextView
+            android:id="@+id/txt_call_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Connected"
+            android:textColor="#27ae60"
+            android:textSize="28sp" />
+
+        <!-- Call Timer -->
+        <TextView
+            android:id="@+id/txt_call_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="#cccccc"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Call Control Buttons -->
+    <LinearLayout
+        android:id="@+id/call_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Top Row: Mute and Speaker Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- Mute Button -->
+            <Button
+                android:id="@+id/btn_mute"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:layout_marginEnd="32dp"
+                android:background="#555555"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusRight="@id/btn_speaker"
+                android:nextFocusDown="@id/btn_hang_up"
+                android:text="Mute"
+                android:textColor="#ffffff"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <!-- Speaker Button -->
+            <Button
+                android:id="@+id/btn_speaker"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:background="#555555"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusLeft="@id/btn_mute"
+                android:nextFocusDown="@id/btn_hang_up"
+                android:text="Speaker"
+                android:textColor="#ffffff"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Bottom Row: Hang Up Button -->
+        <Button
+            android:id="@+id/btn_hang_up"
+            android:layout_width="240dp"
+            android:layout_height="100dp"
+            android:background="#e74c3c"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusUp="@id/btn_mute"
+            android:text="Hang Up"
+            android:textColor="#ffffff"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Audio Status Indicators -->
+    <LinearLayout
+        android:id="@+id/audio_status_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/call_controls"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Mute Status Indicator -->
+        <TextView
+            android:id="@+id/txt_mute_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="🔇 Muted"
+            android:textColor="#f39c12"
+            android:textSize="24sp"
+            android:visibility="gone" />
+
+        <!-- Speaker Status Indicator -->
+        <TextView
+            android:id="@+id/txt_speaker_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔊 Speaker On"
+            android:textColor="#3498db"
+            android:textSize="24sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>
