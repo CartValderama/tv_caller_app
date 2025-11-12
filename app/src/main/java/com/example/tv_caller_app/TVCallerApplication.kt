@@ -4,7 +4,12 @@ import android.app.Application
 import android.util.Log
 import com.example.tv_caller_app.auth.SessionManager
 import com.example.tv_caller_app.auth.SessionRefreshManager
+import com.example.tv_caller_app.calling.repository.PresenceRepository
 import com.example.tv_caller_app.repository.AuthRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 /**
  * Application class for TV Caller App.
@@ -14,6 +19,10 @@ class TVCallerApplication : Application() {
 
     private val TAG = "TVCallerApplication"
     private var sessionRefreshManager: SessionRefreshManager? = null
+    private var presenceRepository: PresenceRepository? = null
+
+    // Application-scoped coroutine for background tasks
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override fun onCreate() {
         super.onCreate()
@@ -57,6 +66,59 @@ class TVCallerApplication : Application() {
         } catch (e: Exception) {
             Log.e(TAG, "Failed to stop SessionRefreshManager", e)
         }
+    }
+
+    /**
+     * Public method to start presence tracking.
+     * Sets user online and starts heartbeat.
+     * Call this after successful login or when app comes to foreground.
+     *
+     * @param deviceType Type of device (tv, phone, tablet)
+     */
+    fun startPresence(deviceType: String = "tv") {
+        applicationScope.launch {
+            try {
+                val sessionManager = SessionManager.getInstance(this@TVCallerApplication)
+                presenceRepository = PresenceRepository.getInstance(sessionManager)
+
+                val result = presenceRepository?.setOnline(deviceType)
+                if (result?.isSuccess == true) {
+                    Log.d(TAG, "Presence started successfully")
+                } else {
+                    Log.e(TAG, "Failed to start presence: ${result?.exceptionOrNull()?.message}")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to start presence", e)
+            }
+        }
+    }
+
+    /**
+     * Public method to stop presence tracking.
+     * Sets user offline and stops heartbeat.
+     * Call this after logout or when app goes to background.
+     */
+    fun stopPresence() {
+        applicationScope.launch {
+            try {
+                val result = presenceRepository?.setOffline()
+                if (result?.isSuccess == true) {
+                    Log.d(TAG, "Presence stopped successfully")
+                } else {
+                    Log.e(TAG, "Failed to stop presence: ${result?.exceptionOrNull()?.message}")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to stop presence", e)
+            }
+        }
+    }
+
+    /**
+     * Get PresenceRepository instance.
+     * Returns null if not initialized (user not logged in).
+     */
+    fun getPresenceRepository(): PresenceRepository? {
+        return presenceRepository
     }
 
     /**
