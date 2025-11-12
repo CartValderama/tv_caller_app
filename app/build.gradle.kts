@@ -80,4 +80,7 @@ dependencies {
 
     // Security - Encrypted SharedPreferences
     implementation(libs.androidx.security.crypto)
+
+    // WebRTC - Official Google implementation
+    implementation(libs.webrtc)
 }
