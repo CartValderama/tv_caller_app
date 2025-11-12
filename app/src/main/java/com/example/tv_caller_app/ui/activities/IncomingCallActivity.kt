@@ -11,7 +11,11 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.tv_caller_app.R
+import com.example.tv_caller_app.auth.SessionManager
+import com.example.tv_caller_app.viewmodel.CallViewModel
+import com.example.tv_caller_app.viewmodel.CallViewModelFactory
 
 /**
  * IncomingCallActivity - Full-screen UI for incoming calls.
@@ -39,6 +43,9 @@ class IncomingCallActivity : FragmentActivity() {
     private lateinit var txtCallStatus: TextView
     private lateinit var btnAnswerCall: Button
     private lateinit var btnRejectCall: Button
+
+    // ViewModel
+    private lateinit var callViewModel: CallViewModel
 
     // Call data
     private var callerId: String? = null
@@ -84,6 +91,11 @@ class IncomingCallActivity : FragmentActivity() {
 
         setContentView(R.layout.activity_incoming_call)
 
+        // Initialize CallViewModel
+        val sessionManager = SessionManager.getInstance(this)
+        val factory = CallViewModelFactory(applicationContext, sessionManager)
+        callViewModel = ViewModelProvider(this, factory)[CallViewModel::class.java]
+
         // Extract intent data
         extractIntentData()
 
@@ -93,6 +105,9 @@ class IncomingCallActivity : FragmentActivity() {
 
         // Setup button listeners
         setupButtonListeners()
+
+        // Observe ViewModel state
+        observeViewModel()
 
         // Start ringtone and wake lock
         startRingtone()
@@ -169,6 +184,56 @@ class IncomingCallActivity : FragmentActivity() {
     }
 
     /**
+     * Observe CallViewModel state changes.
+     */
+    private fun observeViewModel() {
+        // Observe call state
+        callViewModel.callState.observe(this) { state ->
+            Log.d(TAG, "Call state changed: $state")
+
+            when (state) {
+                is CallViewModel.CallState.Connected -> {
+                    // Call answered and connected - transition to InCallActivity
+                    Log.i(TAG, "Call connected - transitioning to InCallActivity")
+
+                    val intent = InCallActivity.createIntent(
+                        context = this,
+                        contactId = state.remoteUserId,
+                        contactName = state.remoteUserName,
+                        callId = callId ?: "",
+                        isIncoming = state.isIncoming
+                    )
+                    startActivity(intent)
+                    finish()
+                }
+                is CallViewModel.CallState.Ended -> {
+                    // Call ended
+                    Log.i(TAG, "Call ended: ${state.reason}")
+                    finish()
+                }
+                is CallViewModel.CallState.Failed -> {
+                    // Call failed
+                    Log.e(TAG, "Call failed: ${state.error}")
+                    txtCallStatus.text = "Call failed"
+                    finish()
+                }
+                else -> {
+                    // Other states - just log
+                    Log.d(TAG, "Unhandled state in IncomingCallActivity: $state")
+                }
+            }
+        }
+
+        // Observe errors
+        callViewModel.errorMessage.observe(this) { error ->
+            error?.let {
+                Log.e(TAG, "Error: $it")
+                txtCallStatus.text = "Error: $it"
+            }
+        }
+    }
+
+    /**
      * Answer the incoming call.
      */
     private fun answerCall() {
@@ -177,21 +242,11 @@ class IncomingCallActivity : FragmentActivity() {
         // Stop ringtone
         stopRingtone()
 
-        // TODO: Notify CallViewModel/CallService to answer call
-        // For now, just transition to InCallActivity
+        // Answer call via ViewModel
+        callViewModel.answerCall()
 
-        // Start InCallActivity
-        val intent = InCallActivity.createIntent(
-            context = this,
-            contactId = callerId ?: "",
-            contactName = callerName ?: "Unknown",
-            callId = callId ?: "",
-            isIncoming = true
-        )
-        startActivity(intent)
-
-        // Finish this activity
-        finish()
+        // Note: Transition to InCallActivity will happen in observeViewModel
+        // when state changes to Connected
     }
 
     /**
@@ -203,7 +258,8 @@ class IncomingCallActivity : FragmentActivity() {
         // Stop ringtone
         stopRingtone()
 
-        // TODO: Notify CallViewModel/CallService to reject call
+        // Reject call via ViewModel
+        callViewModel.rejectCall()
 
         // Finish this activity
         finish()

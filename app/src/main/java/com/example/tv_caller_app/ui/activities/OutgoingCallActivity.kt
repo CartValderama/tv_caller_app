@@ -12,7 +12,11 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.tv_caller_app.R
+import com.example.tv_caller_app.auth.SessionManager
+import com.example.tv_caller_app.viewmodel.CallViewModel
+import com.example.tv_caller_app.viewmodel.CallViewModelFactory
 
 /**
  * OutgoingCallActivity - UI for outgoing calls (ringing state).
@@ -40,6 +44,9 @@ class OutgoingCallActivity : FragmentActivity() {
     private lateinit var txtCallStatus: TextView
     private lateinit var btnHangUp: Button
     private lateinit var progressConnecting: ProgressBar
+
+    // ViewModel
+    private lateinit var callViewModel: CallViewModel
 
     // Call data
     private var contactId: String? = null
@@ -85,6 +92,11 @@ class OutgoingCallActivity : FragmentActivity() {
 
         setContentView(R.layout.activity_outgoing_call)
 
+        // Initialize CallViewModel
+        val sessionManager = SessionManager.getInstance(this)
+        val factory = CallViewModelFactory(applicationContext, sessionManager)
+        callViewModel = ViewModelProvider(this, factory)[CallViewModel::class.java]
+
         // Extract intent data
         extractIntentData()
 
@@ -94,6 +106,9 @@ class OutgoingCallActivity : FragmentActivity() {
 
         // Setup button listeners
         setupButtonListeners()
+
+        // Observe ViewModel state
+        observeViewModel()
 
         // Start ringback tone (dial tone)
         startRingbackTone()
@@ -162,6 +177,67 @@ class OutgoingCallActivity : FragmentActivity() {
     }
 
     /**
+     * Observe CallViewModel state changes.
+     */
+    private fun observeViewModel() {
+        // Observe call state
+        callViewModel.callState.observe(this) { state ->
+            Log.d(TAG, "Call state changed: $state")
+
+            when (state) {
+                is CallViewModel.CallState.Connected -> {
+                    // Call answered - transition to InCallActivity
+                    Log.i(TAG, "Call answered - transitioning to InCallActivity")
+
+                    // Cancel timeout
+                    timeoutHandler.removeCallbacksAndMessages(null)
+
+                    // Stop ringback tone
+                    stopRingbackTone()
+
+                    val intent = InCallActivity.createIntent(
+                        context = this,
+                        contactId = state.remoteUserId,
+                        contactName = state.remoteUserName,
+                        callId = callId ?: "",
+                        isIncoming = false
+                    )
+                    startActivity(intent)
+                    finish()
+                }
+                is CallViewModel.CallState.Ended -> {
+                    // Call ended or rejected
+                    Log.i(TAG, "Call ended: ${state.reason}")
+                    txtCallStatus.text = when (state.reason) {
+                        "rejected" -> "Call rejected"
+                        "user_hangup" -> "Call cancelled"
+                        else -> "Call ended"
+                    }
+                    timeoutHandler.postDelayed({ finish() }, 2000)
+                }
+                is CallViewModel.CallState.Failed -> {
+                    // Call failed
+                    Log.e(TAG, "Call failed: ${state.error}")
+                    txtCallStatus.text = "Call failed"
+                    timeoutHandler.postDelayed({ finish() }, 2000)
+                }
+                else -> {
+                    // Other states - just log
+                    Log.d(TAG, "Unhandled state in OutgoingCallActivity: $state")
+                }
+            }
+        }
+
+        // Observe errors
+        callViewModel.errorMessage.observe(this) { error ->
+            error?.let {
+                Log.e(TAG, "Error: $it")
+                txtCallStatus.text = "Error: $it"
+            }
+        }
+    }
+
+    /**
      * Cancel the outgoing call.
      */
     private fun cancelCall() {
@@ -173,34 +249,8 @@ class OutgoingCallActivity : FragmentActivity() {
         // Cancel timeout
         timeoutHandler.removeCallbacksAndMessages(null)
 
-        // TODO: Notify CallViewModel/CallService to cancel call
-
-        // Finish this activity
-        finish()
-    }
-
-    /**
-     * Call was answered by remote party.
-     * Transition to InCallActivity.
-     */
-    fun onCallAnswered() {
-        Log.i(TAG, "Call answered by: $contactName")
-
-        // Stop ringback tone
-        stopRingbackTone()
-
-        // Cancel timeout
-        timeoutHandler.removeCallbacksAndMessages(null)
-
-        // Transition to InCallActivity
-        val intent = InCallActivity.createIntent(
-            context = this,
-            contactId = contactId ?: "",
-            contactName = contactName ?: "Unknown",
-            callId = callId ?: "",
-            isIncoming = false
-        )
-        startActivity(intent)
+        // End call via ViewModel
+        callViewModel.endCall()
 
         // Finish this activity
         finish()

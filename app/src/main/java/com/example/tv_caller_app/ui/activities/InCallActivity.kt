@@ -11,7 +11,11 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.tv_caller_app.R
+import com.example.tv_caller_app.auth.SessionManager
+import com.example.tv_caller_app.viewmodel.CallViewModel
+import com.example.tv_caller_app.viewmodel.CallViewModelFactory
 
 /**
  * InCallActivity - UI for active/ongoing calls.
@@ -44,26 +48,14 @@ class InCallActivity : FragmentActivity() {
     private lateinit var btnSpeaker: Button
     private lateinit var btnHangUp: Button
 
+    // ViewModel
+    private lateinit var callViewModel: CallViewModel
+
     // Call data
     private var contactId: String? = null
     private var contactName: String? = null
     private var callId: String? = null
     private var isIncoming: Boolean = false
-
-    // Call state
-    private var isMuted: Boolean = false
-    private var isSpeakerOn: Boolean = false
-    private var callStartTime: Long = 0
-    private var callDurationSeconds: Int = 0
-
-    // Timer handling
-    private val timerHandler = Handler(Looper.getMainLooper())
-    private val timerRunnable = object : Runnable {
-        override fun run() {
-            updateCallTimer()
-            timerHandler.postDelayed(this, 1000) // Update every second
-        }
-    }
 
     // Audio manager
     private lateinit var audioManager: AudioManager
@@ -102,6 +94,11 @@ class InCallActivity : FragmentActivity() {
 
         setContentView(R.layout.activity_in_call)
 
+        // Initialize CallViewModel
+        val sessionManager = SessionManager.getInstance(this)
+        val factory = CallViewModelFactory(applicationContext, sessionManager)
+        callViewModel = ViewModelProvider(this, factory)[CallViewModel::class.java]
+
         // Initialize audio manager
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
@@ -115,8 +112,8 @@ class InCallActivity : FragmentActivity() {
         // Setup button listeners
         setupButtonListeners()
 
-        // Start call timer
-        startCallTimer()
+        // Observe ViewModel state
+        observeViewModel()
 
         // Configure audio mode
         configureAudioMode()
@@ -168,9 +165,7 @@ class InCallActivity : FragmentActivity() {
         txtCallStatus.text = "Connected"
         txtCallTimer.text = "00:00"
 
-        // Update button states
-        updateMuteButton()
-        updateSpeakerButton()
+        // Button states will be updated via ViewModel observers
     }
 
     /**
@@ -179,17 +174,81 @@ class InCallActivity : FragmentActivity() {
     private fun setupButtonListeners() {
         btnMute.setOnClickListener {
             Log.d(TAG, "Mute button clicked")
-            toggleMute()
+            callViewModel.toggleMute()
         }
 
         btnSpeaker.setOnClickListener {
             Log.d(TAG, "Speaker button clicked")
-            toggleSpeaker()
+            callViewModel.toggleSpeaker()
         }
 
         btnHangUp.setOnClickListener {
             Log.d(TAG, "Hang up button clicked")
-            endCall()
+            callViewModel.endCall()
+        }
+    }
+
+    /**
+     * Observe CallViewModel state changes.
+     */
+    private fun observeViewModel() {
+        // Observe call state
+        callViewModel.callState.observe(this) { state ->
+            Log.d(TAG, "Call state changed: $state")
+
+            when (state) {
+                is CallViewModel.CallState.Ended -> {
+                    // Call ended
+                    Log.i(TAG, "Call ended: ${state.reason}")
+                    txtCallStatus.text = "Call ended"
+                    finish()
+                }
+                is CallViewModel.CallState.Failed -> {
+                    // Call failed
+                    Log.e(TAG, "Call failed: ${state.error}")
+                    txtCallStatus.text = "Call failed"
+                    finish()
+                }
+                else -> {
+                    // Other states - just log
+                    Log.d(TAG, "State in InCallActivity: $state")
+                }
+            }
+        }
+
+        // Observe call duration (timer)
+        callViewModel.callDuration.observe(this) { duration ->
+            val minutes = duration / 60
+            val seconds = duration % 60
+            txtCallTimer.text = String.format("%02d:%02d", minutes, seconds)
+        }
+
+        // Observe mute state
+        callViewModel.isMuted.observe(this) { isMuted ->
+            updateMuteButton(isMuted)
+        }
+
+        // Observe speaker state
+        callViewModel.isSpeakerOn.observe(this) { isSpeakerOn ->
+            updateSpeakerButton(isSpeakerOn)
+        }
+
+        // Observe errors
+        callViewModel.errorMessage.observe(this) { error ->
+            error?.let {
+                Log.e(TAG, "Error: $it")
+                txtCallStatus.text = "Error: $it"
+            }
+        }
+
+        // Observe microphone mode
+        callViewModel.microphoneMode.observe(this) { mode ->
+            Log.d(TAG, "Microphone mode: $mode")
+            if (mode == com.example.tv_caller_app.calling.webrtc.WebRTCManager.MicrophoneMode.RECEIVE_ONLY) {
+                // Disable mute button in receive-only mode
+                btnMute.isEnabled = false
+                btnMute.alpha = 0.5f
+            }
         }
     }
 
@@ -206,47 +265,9 @@ class InCallActivity : FragmentActivity() {
     }
 
     /**
-     * Start call timer.
-     */
-    private fun startCallTimer() {
-        callStartTime = System.currentTimeMillis()
-        timerHandler.post(timerRunnable)
-        Log.d(TAG, "Call timer started")
-    }
-
-    /**
-     * Update call timer display.
-     */
-    private fun updateCallTimer() {
-        val elapsedMs = System.currentTimeMillis() - callStartTime
-        callDurationSeconds = (elapsedMs / 1000).toInt()
-
-        val minutes = callDurationSeconds / 60
-        val seconds = callDurationSeconds % 60
-
-        txtCallTimer.text = String.format("%02d:%02d", minutes, seconds)
-    }
-
-    /**
-     * Toggle mute state.
-     */
-    private fun toggleMute() {
-        isMuted = !isMuted
-        updateMuteButton()
-
-        // TODO: Notify WebRTCManager to mute/unmute audio track
-
-        if (isMuted) {
-            Log.i(TAG, "Microphone muted")
-        } else {
-            Log.i(TAG, "Microphone unmuted")
-        }
-    }
-
-    /**
      * Update mute button appearance.
      */
-    private fun updateMuteButton() {
+    private fun updateMuteButton(isMuted: Boolean) {
         if (isMuted) {
             btnMute.text = "Unmute"
             btnMute.setBackgroundColor(getColor(android.R.color.holo_orange_dark))
@@ -259,29 +280,9 @@ class InCallActivity : FragmentActivity() {
     }
 
     /**
-     * Toggle speaker state.
-     */
-    private fun toggleSpeaker() {
-        isSpeakerOn = !isSpeakerOn
-        updateSpeakerButton()
-
-        try {
-            audioManager.isSpeakerphoneOn = isSpeakerOn
-
-            if (isSpeakerOn) {
-                Log.i(TAG, "Speaker turned on")
-            } else {
-                Log.i(TAG, "Speaker turned off")
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to toggle speaker", e)
-        }
-    }
-
-    /**
      * Update speaker button appearance.
      */
-    private fun updateSpeakerButton() {
+    private fun updateSpeakerButton(isSpeakerOn: Boolean) {
         if (isSpeakerOn) {
             btnSpeaker.text = "Speaker Off"
             btnSpeaker.setBackgroundColor(getColor(android.R.color.holo_blue_dark))
@@ -293,42 +294,13 @@ class InCallActivity : FragmentActivity() {
         }
     }
 
-    /**
-     * End the call and finish activity.
-     */
-    private fun endCall() {
-        Log.i(TAG, "Ending call with: $contactName")
-
-        // Update status
-        txtCallStatus.text = "Call ended"
-
-        // Stop timer
-        timerHandler.removeCallbacks(timerRunnable)
-
-        // TODO: Notify CallViewModel/CallService to end call
-        // TODO: Save call to history
-
-        // Reset audio mode
-        try {
-            audioManager.mode = AudioManager.MODE_NORMAL
-            audioManager.isSpeakerphoneOn = false
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to reset audio mode", e)
-        }
-
-        // Finish activity
-        finish()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 
-        // Cleanup
-        timerHandler.removeCallbacks(timerRunnable)
-
         // Reset audio mode
         try {
             audioManager.mode = AudioManager.MODE_NORMAL
+            @Suppress("DEPRECATION")
             audioManager.isSpeakerphoneOn = false
         } catch (e: Exception) {
             Log.e(TAG, "Failed to cleanup audio", e)
@@ -340,6 +312,6 @@ class InCallActivity : FragmentActivity() {
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // Back button ends the call
-        endCall()
+        callViewModel.endCall()
     }
 }
