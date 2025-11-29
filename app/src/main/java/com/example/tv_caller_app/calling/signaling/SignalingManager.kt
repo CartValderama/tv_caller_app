@@ -1,7 +1,9 @@
 package com.example.tv_caller_app.calling.signaling
 
 import android.util.Log
+import com.example.tv_caller_app.model.Profile
 import com.example.tv_caller_app.network.SupabaseClient
+import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.realtime.RealtimeChannel
 import io.github.jan.supabase.realtime.broadcastFlow
 import io.github.jan.supabase.realtime.channel
@@ -67,6 +69,9 @@ class SignalingManager(
     // Coroutine scope for signaling operations
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    // User's 9-digit contact ID for calling (fetched from profiles table)
+    private var currentUserContactId: String? = null
+
     // Shared signaling channel for WebRTC (all users subscribe to this)
     private var signalingChannel: RealtimeChannel? = null
 
@@ -91,6 +96,23 @@ class SignalingManager(
 
         try {
             Log.d(TAG, "Initializing SignalingManager for user: $currentUserId")
+
+            // Fetch user's 9-digit contact_id from profiles table
+            try {
+                val profiles = supabase.from("profiles")
+                    .select {
+                        filter {
+                            eq("id", currentUserId)
+                        }
+                    }
+                    .decodeList<Profile>()
+
+                currentUserContactId = profiles.firstOrNull()?.contactId?.toString()
+                Log.i(TAG, "User contact_id fetched: $currentUserContactId")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to fetch user contact_id, using UUID as fallback", e)
+                currentUserContactId = currentUserId
+            }
 
             // Create and subscribe to SHARED signaling channel
             signalingChannel = supabase.channel("webrtc-signaling")
@@ -138,9 +160,10 @@ class SignalingManager(
         try {
             Log.d(TAG, "Sending call offer to: $targetUserId")
 
-            // Create offer message
+            // Create offer message using 9-digit contact_id for caller identification
             val message = SignalingMessage.CallOffer(
-                callerId = currentUserId,
+                callerId = currentUserContactId ?: currentUserId,  // 9-digit ID for display
+                callerUserId = currentUserId,                       // UUID for routing responses
                 callerName = callerName,
                 callerUsername = callerUsername,
                 sdp = offer,
@@ -374,6 +397,7 @@ class SignalingManager(
                         _events.emit(
                             SignalingEvent.IncomingCall(
                                 callerId = msg.callerId,
+                                callerUserId = msg.callerUserId,
                                 callerName = msg.callerName,
                                 callerUsername = msg.callerUsername,
                                 offer = msg.sdp,
@@ -398,12 +422,19 @@ class SignalingManager(
                         )
                     }
 
+                    "CallEnded" in messageJson || ("reason" in messageJson && "duration" in messageJson) -> {
+                        val msg = json.decodeFromString<SignalingMessage.CallEnded>(messageJson)
+                        _events.emit(SignalingEvent.CallEnded(reason = msg.reason, duration = msg.duration))
+                    }
+
                     "CallRejected" in messageJson || ("timestamp" in messageJson && "duration" !in messageJson && "callerId" !in messageJson) -> {
                         val msg = json.decodeFromString<SignalingMessage.CallRejected>(messageJson)
                         _events.emit(SignalingEvent.CallRejected(reason = msg.reason))
                     }
 
-                    "CallEnded" in messageJson || ("reason" in messageJson && "duration" in messageJson) -> {
+                    // Fallback: Message with only "reason" field (early hangup/timeout)
+                    "reason" in messageJson && "callerId" !in messageJson && "timestamp" !in messageJson -> {
+                        // This is likely a CallEnded message with omitted duration field
                         val msg = json.decodeFromString<SignalingMessage.CallEnded>(messageJson)
                         _events.emit(SignalingEvent.CallEnded(reason = msg.reason, duration = msg.duration))
                     }

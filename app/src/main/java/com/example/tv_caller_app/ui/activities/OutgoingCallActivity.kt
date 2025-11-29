@@ -9,14 +9,12 @@ import android.os.Looper
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.tv_caller_app.R
-import com.example.tv_caller_app.auth.SessionManager
+import com.example.tv_caller_app.TVCallerApplication
 import com.example.tv_caller_app.viewmodel.CallViewModel
-import com.example.tv_caller_app.viewmodel.CallViewModelFactory
 
 /**
  * OutgoingCallActivity - UI for outgoing calls (ringing state).
@@ -43,7 +41,6 @@ class OutgoingCallActivity : FragmentActivity() {
     private lateinit var txtContactPhone: TextView
     private lateinit var txtCallStatus: TextView
     private lateinit var btnHangUp: Button
-    private lateinit var progressConnecting: ProgressBar
 
     // ViewModel
     private lateinit var callViewModel: CallViewModel
@@ -92,10 +89,18 @@ class OutgoingCallActivity : FragmentActivity() {
 
         setContentView(R.layout.activity_outgoing_call)
 
-        // Initialize CallViewModel
-        val sessionManager = SessionManager.getInstance(this)
-        val factory = CallViewModelFactory(applicationContext, sessionManager)
-        callViewModel = ViewModelProvider(this, factory)[CallViewModel::class.java]
+        // Get the global CallViewModel from application (don't create a new one!)
+        val app = application as TVCallerApplication
+        val globalCallViewModel = app.getCallViewModel()
+
+        if (globalCallViewModel == null) {
+            Log.e(TAG, "Global CallViewModel not initialized!")
+            Toast.makeText(this, "Call service not available", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        callViewModel = globalCallViewModel
 
         // Extract intent data
         extractIntentData()
@@ -146,7 +151,6 @@ class OutgoingCallActivity : FragmentActivity() {
         txtContactPhone = findViewById(R.id.txt_contact_phone)
         txtCallStatus = findViewById(R.id.txt_call_status)
         btnHangUp = findViewById(R.id.btn_hang_up)
-        progressConnecting = findViewById(R.id.progress_connecting)
 
         // Request focus on hang up button for D-pad navigation
         btnHangUp.requestFocus()
@@ -300,6 +304,12 @@ class OutgoingCallActivity : FragmentActivity() {
      */
     private fun onCallTimeout() {
         txtCallStatus.text = "No answer"
+
+        // Stop ringback tone
+        stopRingbackTone()
+
+        // End call via ViewModel - this sends cancellation to callee
+        callViewModel.endCall()
 
         // TODO: Log missed call
 
